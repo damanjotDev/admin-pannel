@@ -9,7 +9,7 @@ export const LoginScreen = () => {
                 <div className="lg:py-20 lg:px-10 px-5 py-10 bg-accent md:w-[500px] w-full rounded-lg shadow-lg flex flex-col items-center gap-5">
                     <TypographyH2 title="Login" className="text-primary" />
                     <LoginForm />
-                    <AuthLinks showRegister={true} showForgotPassword={true}/>
+                    <AuthLinks showRegister={true} showForgotPassword={true} />
                 </div>
             </div>
         </div>

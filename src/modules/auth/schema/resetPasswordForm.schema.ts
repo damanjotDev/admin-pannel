@@ -1,4 +1,4 @@
-import { yup } from "@/lib/reactHookForm";
+import { yup } from '@/lib/reactHookForm';
 
 export const resetPasswordValidation = yup.object({
     password: yup

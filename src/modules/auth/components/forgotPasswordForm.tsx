@@ -28,11 +28,7 @@ export const ForgotPasswordForm = () => {
             { email: data.email },
             {
                 onSuccess: () => {
-                    toast.success('Password reset link sent to your email');
                     reset();
-                },
-                onError: () => {
-                    toast.error('Failed to send reset link');
                 },
             },
         );

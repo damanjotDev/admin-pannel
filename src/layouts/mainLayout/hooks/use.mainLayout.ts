@@ -1,16 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/store/authStore';
+import { useAuthStore } from '@/modules/auth/store/authStore';
 
 export const useMainLayout = () => {
-    const { user, logout } = useAuthStore();
-    const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuthStore();
 
     const handleLogout = () => {
-        logout(() => navigate('/login'));
+        logout();
     };
 
     return {
-        user,
+        isAuthenticated,
         handleLogout,
     };
 };

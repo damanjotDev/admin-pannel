@@ -1,5 +1,7 @@
-//@ts-ignore
 import axios from 'axios';
+import type { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
+
+import { parseApiError } from './parseApiError';
 interface ApiConfig {
     baseURL: string;
     timeout: number;
@@ -13,17 +15,21 @@ const apiConfig: ApiConfig = {
 
 const axiosInstance: any = axios.create(apiConfig);
 
-axiosInstance.interceptors.request.use(async (req: any) => {
-    try {
-        const accessToken = localStorage.getItem('accessToken');
-        if (accessToken) {
-            req.headers.Authorization = `Bearer ${accessToken}`;
+axiosInstance.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
         }
-        return req;
-    } catch (error) {
-        console.error('error', error);
-    }
-});
+        return config;
+    },
+    (error: AxiosError) => Promise.reject(error),
+);
+
+axiosInstance.interceptors.response.use(
+    (response: AxiosResponse) => response,
+    (error: AxiosError) => Promise.reject(parseApiError(error)),
+);
 
 // API methods
 const api = {

@@ -1,4 +1,4 @@
-import { yup } from "@/lib/reactHookForm";
+import { yup } from '@/lib/reactHookForm';
 
 export const registerFormValidation = yup.object({
     email: yup.string().email('Invalid email address').required('Email is required'),

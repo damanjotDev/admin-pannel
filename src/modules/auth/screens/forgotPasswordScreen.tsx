@@ -9,7 +9,7 @@ export const ForgotPasswordScreen = () => {
                 <div className="lg:py-20 lg:px-10 px-5 py-10 bg-accent md:w-[500px] w-full rounded-lg shadow-lg flex flex-col items-center gap-5">
                     <TypographyH2 title="Forgot password" className="text-primary" />
                     <ForgotPasswordForm />
-                    <AuthLinks showLogin={true}/>
+                    <AuthLinks showLogin={true} />
                 </div>
             </div>
         </div>

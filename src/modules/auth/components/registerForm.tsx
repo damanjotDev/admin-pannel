@@ -36,10 +36,6 @@ export const RegisterForm = () => {
             {
                 onSuccess: () => {
                     reset();
-                    toast.success('user registered successfully!');
-                },
-                onError: (error) => {
-                    toast.error('registration faild!');
                 },
             },
         );

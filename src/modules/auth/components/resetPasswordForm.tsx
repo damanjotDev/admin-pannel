@@ -32,11 +32,7 @@ export const ResetPasswordForm = ({ token }: { token: string }) => {
             },
             {
                 onSuccess: () => {
-                    toast.success('Password reset successfully');
                     reset();
-                },
-                onError: () => {
-                    toast.error('Failed to reset password');
                 },
             },
         );

@@ -1,4 +1,4 @@
-import { useForm, yup, yupResolver } from '@/lib/reactHookForm';
+import { useForm, yupResolver } from '@/lib/reactHookForm';
 import { Button, Input } from '@/components/ui';
 import { Loader2 } from '@/lib/icons';
 import { useLogin } from '../hooks/use.login';
@@ -33,10 +33,6 @@ export const LoginForm = () => {
             {
                 onSuccess: () => {
                     reset();
-                    toast.success('user registered successfully!');
-                },
-                onError: (error) => {
-                    toast.error('registration faild!');
                 },
             },
         );

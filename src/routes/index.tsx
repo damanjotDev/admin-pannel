@@ -9,6 +9,7 @@ import { LoginPage } from '@/pages/auth/login';
 import { RegisterPage } from '@/pages/auth/register';
 import { ResetPasswordPage } from '@/pages/auth/resetPassword';
 import { ForgotPasswordPage } from '@/pages/auth/forgotPassword';
+import { ROUTES } from '@/constants/routes';
 
 export const AppRoutes = () => {
     return (
@@ -17,17 +18,17 @@ export const AppRoutes = () => {
                 <Route element={<ProtectedRoute />}>
                     <Route element={<MainLayout />}>
                         {/* Redirect / → /home */}
-                        <Route path="/" element={<Navigate to="/home" replace />} />
-                        <Route path="/home" element={<HomePage />} />
+                        <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.HOME} replace />} />
+                        <Route path={ROUTES.HOME} element={<HomePage />} />
                     </Route>
                 </Route>
 
                 <Route element={<GuestRoute />}>
-                    <Route path="/" element={<Navigate to="/login" replace />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/reset-password" element={<ResetPasswordPage />} />
-                    <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.LOGIN} replace />} />
+                    <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+                    <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+                    <Route path={ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
+                    <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
                 </Route>
 
                 <Route

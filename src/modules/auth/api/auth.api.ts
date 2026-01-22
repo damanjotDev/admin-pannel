@@ -1,5 +1,3 @@
-// modules/user/api/user.api.ts
-
 import api from '@/lib/axios';
 
 export const loginApi = (data: any) => api.post('/api/v1/user/login', data).then((res) => res.data);
