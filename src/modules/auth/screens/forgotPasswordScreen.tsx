@@ -1,0 +1,17 @@
+import { TypographyH2 } from '@/components/ui';
+import { ForgotPasswordForm } from '../components/forgotPasswordForm';
+import { AuthLinks } from '../components/auth-links';
+
+export const ForgotPasswordScreen = () => {
+    return (
+        <div className="relative w-full h-full">
+            <div className="h-screen flex flex-col justify-center items-center w-full p-5">
+                <div className="lg:py-20 lg:px-10 px-5 py-10 bg-accent md:w-[500px] w-full rounded-lg shadow-lg flex flex-col items-center gap-5">
+                    <TypographyH2 title="Forgot password" className="text-primary" />
+                    <ForgotPasswordForm />
+                    <AuthLinks showLogin={true}/>
+                </div>
+            </div>
+        </div>
+    );
+};
