@@ -4,6 +4,7 @@ import type { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axio
 import { parseApiError } from './parseApiError';
 import { useAuthStore } from '@/modules/auth/store/authStore';
 import { toast } from '@/lib/toast';
+import { envConfig } from '@/config/envConfig';
 
 interface ApiConfig {
     baseURL: string;
@@ -12,8 +13,8 @@ interface ApiConfig {
 }
 
 const apiConfig: ApiConfig = {
-    baseURL: 'http://localhost:8000',
-    timeout: 1000000,
+    baseURL: envConfig().VITE_API_BASE_URL,
+    timeout: envConfig().VITE_API_TIMEOUT,
 };
 
 const axiosInstance: any = axios.create(apiConfig);

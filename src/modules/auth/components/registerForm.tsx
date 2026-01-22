@@ -1,8 +1,8 @@
-import { useForm, yupResolver, yup } from '@/lib/reactHookForm';
+import { useState } from 'react';
+import { useForm, yupResolver } from '@/lib/reactHookForm';
 import { Button, Input } from '@/components/ui';
-import { Loader2 } from '@/lib/icons';
+import { Loader2, Eye, EyeOff } from '@/lib/icons';
 import { useRegister } from '../hooks/use.register';
-import { toast } from '@/lib/toast';
 import { registerFormValidation } from '../schema/registerForm.schema';
 import type { RegisterFormInput } from '../types/registerForm.types';
 
@@ -15,6 +15,7 @@ const defaultValues: RegisterFormInput = {
 
 export const RegisterForm = () => {
     const registerQuery = useRegister();
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -34,9 +35,7 @@ export const RegisterForm = () => {
                 password: data.password,
             },
             {
-                onSuccess: () => {
-                    reset();
-                },
+                onSuccess: () => reset(),
             },
         );
     };
@@ -45,47 +44,47 @@ export const RegisterForm = () => {
         <form className="w-full grid grid-cols-1 gap-5" onSubmit={handleSubmit(onSubmit)}>
             {/* Name */}
             <div className="grid w-full items-center gap-1.5">
-                <label htmlFor="email" className="text-sm">
-                    Your name (required)
-                </label>
-                <Input disabled={registerQuery.isPending} id="name" placeholder="Name" {...register('name')} />
+                <label className="text-sm">Your name (required)</label>
+                <Input disabled={registerQuery.isPending} placeholder="Name" {...register('name')} />
                 {errors.name && <p className="text-red-500 text-xs">{errors.name.message}</p>}
             </div>
 
             {/* Email */}
             <div className="grid w-full items-center gap-1.5">
-                <label htmlFor="email" className="text-sm">
-                    Email address (required)
-                </label>
-                <Input disabled={registerQuery.isPending} id="email" placeholder="Email" {...register('email')} />
+                <label className="text-sm">Email address (required)</label>
+                <Input disabled={registerQuery.isPending} placeholder="Email" {...register('email')} />
                 {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
             </div>
 
             {/* Password */}
-            <div className="grid w-full items-center gap-1.5">
-                <label htmlFor="password" className="text-sm">
-                    Password (required)
-                </label>
+            <div className="grid w-full items-center gap-1.5 relative">
+                <label className="text-sm">Password (required)</label>
                 <Input
                     disabled={registerQuery.isPending}
-                    type="password"
-                    id="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
                     {...register('password')}
                 />
+
+                <button
+                    type="button"
+                    onClick={() => setShowPassword((v) => !v)}
+                    className="p-0 absolute right-3 top-[38px] text-gray-500"
+                    tabIndex={-1}
+                >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+
                 {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
                 <p className="text-xs text-muted-foreground">Min 8 chars, uppercase, lowercase, number & symbol</p>
             </div>
 
             {/* Confirm Password */}
             <div className="grid w-full items-center gap-1.5">
-                <label htmlFor="confirmPassword" className="text-sm">
-                    Confirm Password (required)
-                </label>
+                <label className="text-sm">Confirm Password (required)</label>
                 <Input
                     disabled={registerQuery.isPending}
-                    type="password"
-                    id="confirmPassword"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Confirm password"
                     {...register('confirmPassword')}
                 />

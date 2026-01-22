@@ -12,7 +12,7 @@ export const Header = ({ userQuery, onLogout }: HeaderProps) => {
     const { data: user, isLoading, isError } = userQuery;
 
     const renderContent = () => {
-        if (isLoading) return <span className="text-sm text-muted">Loading user...</span>;
+        if (isLoading) return <span className="text-sm">Loading user...</span>;
         if (isError) return <span className="text-sm text-red-500">Failed to load user</span>;
         if (user) return <UserInfo user={user} onLogout={onLogout} />;
         return null; // fallback

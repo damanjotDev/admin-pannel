@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import { useForm, yupResolver } from '@/lib/reactHookForm';
 import { Button, Input } from '@/components/ui';
-import { Loader2 } from '@/lib/icons';
+import { Loader2, Eye, EyeOff } from '@/lib/icons';
 import { useLogin } from '../hooks/use.login';
-import { toast } from '@/lib/toast';
 import { loginFormValidation } from '../schema/loginForm.schema';
 import type { LoginFormInput } from '../types/loginForm.types';
 
@@ -13,6 +13,7 @@ const defaultValues: LoginFormInput = {
 
 export const LoginForm = () => {
     const login = useLogin();
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -31,9 +32,7 @@ export const LoginForm = () => {
                 password: data.password,
             },
             {
-                onSuccess: () => {
-                    reset();
-                },
+                onSuccess: () => reset(),
             },
         );
     };
@@ -50,17 +49,28 @@ export const LoginForm = () => {
             </div>
 
             {/* Password */}
-            <div className="grid w-full items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5 relative">
                 <label htmlFor="password" className="text-sm">
                     Password (required)
                 </label>
+
                 <Input
                     disabled={login.isPending}
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     id="password"
                     placeholder="Your password"
                     {...register('password')}
                 />
+
+                <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-[38px] text-gray-500"
+                    tabIndex={-1}
+                >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+
                 {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
             </div>
 
