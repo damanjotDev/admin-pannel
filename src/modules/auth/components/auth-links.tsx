@@ -1,11 +1,6 @@
 import { ROUTES } from '@/constants/routes';
 import { Link } from 'react-router-dom';
-
-type AuthLinksProps = {
-    showForgotPassword?: boolean;
-    showRegister?: boolean;
-    showLogin?: boolean;
-};
+import type { AuthLinksProps } from '../types/authLinks.types';
 
 export const AuthLinks = ({ showForgotPassword = false, showRegister = false, showLogin = false }: AuthLinksProps) => {
     return (

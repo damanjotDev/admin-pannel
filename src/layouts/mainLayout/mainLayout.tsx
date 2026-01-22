@@ -1,13 +1,15 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from './components/header';
 import { useMainLayout } from './hooks/use.mainLayout';
+import { useCurrentUser } from '@/modules/user/hooks/use.currentUser';
 
 export const MainLayout = () => {
-    const { user, handleLogout } = useMainLayout();
+    const { handleLogout } = useMainLayout();
+    const currentUserQuery = useCurrentUser();
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Header name={user?.name} email={user?.email} userType={user?.userType} onLogout={handleLogout} />
+            <Header userQuery={currentUserQuery} onLogout={handleLogout} />
 
             <main className="flex-1 p-10">
                 <Outlet />

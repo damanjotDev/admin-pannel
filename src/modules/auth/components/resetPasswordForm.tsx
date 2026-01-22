@@ -1,10 +1,11 @@
 import { useForm, yupResolver } from '@/lib/reactHookForm';
 import { Button, Input } from '@/components/ui';
 import { Loader2 } from '@/lib/icons';
-import { toast } from '@/lib/toast';
 import { useResetPassword } from '../hooks/use.resetPassword';
 import { resetPasswordValidation } from '../schema/resetPasswordForm.schema';
 import type { ResetPasswordFormInput } from '../types/resetPassword.types';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 const defaultValues: ResetPasswordFormInput = {
     password: '',
@@ -13,6 +14,7 @@ const defaultValues: ResetPasswordFormInput = {
 
 export const ResetPasswordForm = ({ token }: { token: string }) => {
     const resetPassword = useResetPassword();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -28,11 +30,12 @@ export const ResetPasswordForm = ({ token }: { token: string }) => {
         resetPassword.mutate(
             {
                 token,
-                password: data.password,
+                newPassword: data.password,
             },
             {
                 onSuccess: () => {
                     reset();
+                    navigate(ROUTES.LOGIN, { replace: true });
                 },
             },
         );

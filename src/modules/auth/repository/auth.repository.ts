@@ -5,4 +5,5 @@ export const authRepository = {
     register: api.registerApi,
     forgotPassword: api.forgotPasswordApi,
     resetPassword: api.resetPasswordApi,
+    verifyResetPasswordToken: api.verifyResetPasswordTokenApi,
 };

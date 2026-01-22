@@ -2,6 +2,9 @@ import axios from 'axios';
 import type { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { parseApiError } from './parseApiError';
+import { useAuthStore } from '@/modules/auth/store/authStore';
+import { toast } from '@/lib/toast';
+
 interface ApiConfig {
     baseURL: string;
     timeout: number;
@@ -9,7 +12,7 @@ interface ApiConfig {
 }
 
 const apiConfig: ApiConfig = {
-    baseURL: 'https://adaired-server.vercel.app',
+    baseURL: 'http://localhost:8000',
     timeout: 1000000,
 };
 
@@ -17,7 +20,7 @@ const axiosInstance: any = axios.create(apiConfig);
 
 axiosInstance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-        const token = localStorage.getItem('accessToken');
+        const token = useAuthStore.getState().accessToken;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -28,7 +31,17 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => response,
-    (error: AxiosError) => Promise.reject(parseApiError(error)),
+    (error: AxiosError) => {
+        //@ts-ignore
+        const status = error?.status || error.response?.data?.status;
+
+        if (status === 401) {
+            useAuthStore.getState().logout();
+            toast.error('Session expired!');
+        }
+
+        return Promise.reject(parseApiError(error));
+    },
 );
 
 // API methods
@@ -39,10 +52,10 @@ const api = {
     },
 
     // POST request
-    post: (url: string, data: any): Promise<any> => axiosInstance.post(url, data),
+    post: <T>(url: string, data: any): Promise<any> => axiosInstance.post(url, data),
 
     // PUT request
-    put: (url: string, data: any): Promise<any> => axiosInstance.put(url, data),
+    put: <T>(url: string, data: any): Promise<any> => axiosInstance.put(url, data),
 
     // DELETE request
     delete: (url: string): Promise<any> => axiosInstance.delete(url),
