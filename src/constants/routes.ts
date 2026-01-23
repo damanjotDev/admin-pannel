@@ -9,4 +9,8 @@ export const ROUTES = {
     REGISTER: '/register',
     FORGOT_PASSWORD: '/forgot-password',
     RESET_PASSWORD: '/reset-password/:token',
+
+    //Order Routes
+    CREATE_ORDER: '/orders/create-order',
+    UPDATE_ORDER: '/orders/update-order/:orderId',
 } as const;

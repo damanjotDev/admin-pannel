@@ -10,6 +10,8 @@ import { RegisterPage } from '@/pages/auth/register';
 import { ResetPasswordPage } from '@/pages/auth/resetPassword';
 import { ForgotPasswordPage } from '@/pages/auth/forgotPassword';
 import { ROUTES } from '@/constants/routes';
+import { CreateOrderPage } from '@/pages/main/order/createOrder';
+import { UpdateOrderPage } from '@/pages/main/order/updateOrder';
 
 export const AppRoutes = () => {
     return (
@@ -20,6 +22,8 @@ export const AppRoutes = () => {
                         {/* Redirect / → /home */}
                         <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.HOME} replace />} />
                         <Route path={ROUTES.HOME} element={<HomePage />} />
+                        <Route path={ROUTES.CREATE_ORDER} element={<CreateOrderPage />} />
+                        <Route path={ROUTES.UPDATE_ORDER} element={<UpdateOrderPage />} />
                     </Route>
                 </Route>
 
