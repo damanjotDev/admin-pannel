@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const HomeScreen = () => {
     const navigate = useNavigate();
-    const getOrdersQuery = useOrders({ page: 1, limit: 10 });
+    const getOrdersQuery = useOrders();
     const deleteOrderQuery = useDeleteOrder();
 
     return (
@@ -27,7 +27,7 @@ export const HomeScreen = () => {
                 onEdit={(row) => navigate(ROUTES.UPDATE_ORDER.replace(':orderId', row._id))}
                 onDelete={(row) => deleteOrderQuery.mutate(row._id)}
                 onRetry={getOrdersQuery.refetch}
-                isLoading={getOrdersQuery.isLoading}
+                isLoading={getOrdersQuery.isLoading || deleteOrderQuery.isPending}
                 isError={getOrdersQuery.isError || deleteOrderQuery.isError}
                 errorMessage={getOrdersQuery.error?.message || deleteOrderQuery.error?.message}
             />

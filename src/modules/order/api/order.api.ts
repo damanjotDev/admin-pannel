@@ -18,5 +18,4 @@ export const updateOrderApi = (payload: { orderId: string; payload: UpdateOrderP
         .put<ApiSuccessResponse<Order>>(`/api/v1/order/update-order/${payload.orderId}`, { ...payload.payload })
         .then((res) => res.data);
 
-export const deleteOrderApi = (id: string) =>
-    api.delete(`/api/v1/order/delete-order/${id}`).then((res) => res.data);
+export const deleteOrderApi = (id: string) => api.delete(`/api/v1/order/delete-order/${id}`).then((res) => res.data);
