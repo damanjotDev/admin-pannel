@@ -26,6 +26,7 @@ export const HomeScreen = () => {
                 data={getOrdersQuery.data?.orders || []}
                 onEdit={(row) => navigate(ROUTES.UPDATE_ORDER.replace(':orderId', row._id))}
                 onDelete={(row) => deleteOrderQuery.mutate(row._id)}
+                onRetry={getOrdersQuery.refetch}
                 isLoading={getOrdersQuery.isLoading}
                 isError={getOrdersQuery.isError || deleteOrderQuery.isError}
                 errorMessage={getOrdersQuery.error?.message || deleteOrderQuery.error?.message}

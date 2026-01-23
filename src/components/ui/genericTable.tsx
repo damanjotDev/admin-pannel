@@ -14,6 +14,7 @@ interface GenericTableProps<T> {
     data: T[];
     onEdit?: (row: T) => void;
     onDelete?: (row: T) => void;
+    onRetry?: () => void;
     isLoading?: boolean;
     isError?: boolean;
     errorMessage?: string;
@@ -35,6 +36,7 @@ export function GenericTable<T>({
     data,
     onEdit,
     onDelete,
+    onRetry,
     isLoading = false,
     isError = false,
     errorMessage = '',
@@ -67,9 +69,15 @@ export function GenericTable<T>({
     const renderError = () => (
         <div className="w-full py-10 flex flex-col items-center text-red-500">
             <p>{errorMessage || 'Something went wrong'}</p>
-            <Button className="mt-2" variant="outline" onClick={() => window.location.reload()}>
-                Retry
-            </Button>
+            {onRetry ?
+                <Button
+                    className="mt-2"
+                    variant="outline"
+                    onClick={onRetry}
+                >
+                    Retry
+                </Button>
+                : null}
         </div>
     );
 
@@ -105,9 +113,7 @@ export function GenericTable<T>({
                         {data.map((row, idx) => (
                             <tr
                                 key={idx}
-                                className={`hover:bg-gray-50 ${rowClassName} ${
-                                    idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                                }`}
+                                className={`hover:bg-gray-50 ${rowClassName} ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
                             >
                                 {columns.map((col, i) => (
                                     <td key={i} className={`px-4 py-2 border-b border-gray-200 ${cellClassName}`}>
