@@ -69,15 +69,11 @@ export function GenericTable<T>({
     const renderError = () => (
         <div className="w-full py-10 flex flex-col items-center text-red-500">
             <p>{errorMessage || 'Something went wrong'}</p>
-            {onRetry ?
-                <Button
-                    className="mt-2"
-                    variant="outline"
-                    onClick={onRetry}
-                >
+            {onRetry ? (
+                <Button className="mt-2" variant="outline" onClick={onRetry}>
                     Retry
                 </Button>
-                : null}
+            ) : null}
         </div>
     );
 
@@ -89,26 +85,21 @@ export function GenericTable<T>({
         <div className={`w-full flex flex-col gap-3 rounded-md bg-white shadow-sm p-2 ${className}`}>
             {renderHeader()}
 
-            {isLoading && renderLoading()}
-            {isError && renderError()}
-            {!isLoading && !isError && data.length === 0 && renderEmpty()}
+            <table className={`w-full border-collapse border border-gray-200 rounded-md ${tableClassName}`}>
+                <thead className="bg-gray-50 rounded-t-md">
+                    <tr>
+                        {columns.map((col, i) => (
+                            <th key={i} className={`text-left px-4 py-2 border-b border-gray-200 ${cellClassName}`}>
+                                {col.header}
+                            </th>
+                        ))}
+                        {(onEdit || onDelete) && (
+                            <th className={`px-4 py-2 border-b border-gray-200 ${actionsCellClassName}`}>Actions</th>
+                        )}
+                    </tr>
+                </thead>
 
-            {!isLoading && !isError && data.length > 0 && (
-                <table className={`w-full border-collapse border border-gray-200 rounded-md ${tableClassName}`}>
-                    <thead className="bg-gray-50 rounded-t-md">
-                        <tr>
-                            {columns.map((col, i) => (
-                                <th key={i} className={`text-left px-4 py-2 border-b border-gray-200 ${cellClassName}`}>
-                                    {col.header}
-                                </th>
-                            ))}
-                            {(onEdit || onDelete) && (
-                                <th className={`px-4 py-2 border-b border-gray-200 ${actionsCellClassName}`}>
-                                    Actions
-                                </th>
-                            )}
-                        </tr>
-                    </thead>
+                {!isLoading && !isError && data.length > 0 && (
                     <tbody>
                         {data.map((row, idx) => (
                             <tr
@@ -141,8 +132,12 @@ export function GenericTable<T>({
                             </tr>
                         ))}
                     </tbody>
-                </table>
-            )}
+                )}
+            </table>
+
+            {isLoading && renderLoading()}
+            {isError && renderError()}
+            {!isLoading && !isError && data.length === 0 && renderEmpty()}
         </div>
     );
 }
